@@ -6,6 +6,8 @@ class Player extends GameObject {
         this.controller = {};
         this.projectiles = [];
         this.cooldown = 5;
+        this.healtPoints = 3;
+        this.score = 0;
 
 
     }
@@ -21,7 +23,7 @@ class Player extends GameObject {
             proj.move();
 
         }
-
+      
     }
 
     control(canvasWidth, canvasHeight) {
@@ -38,72 +40,60 @@ class Player extends GameObject {
 
 
         })
-        for (const key in this.controller) {
 
-            if (key.includes('Left') && this.controller[key]) {
 
-                this.x = this.x > 0 ? this.x - this.speed : 0;
-           
+        if (this.controller["ArrowLeft"]) {
 
-                
-            }
+            this.x = this.x > 0 ? this.x - this.speed : 0;
 
-            if (key.includes('Right') && this.controller[key]) {
+        }
 
-                this.x = (this.x + this.width) < canvasWidth ? this.x + this.speed : canvasWidth - this.width;
-                
-            }
+        if (this.controller["ArrowRight"]) {
 
-            if (key.includes('Up') && this.controller[key]) {
+            this.x = (this.x + this.width) < canvasWidth ? this.x + this.speed : canvasWidth - this.width;
 
-                this.y = this.y > 0 ? this.y - this.speed : 0;
-            }
-    
-            if (key.includes('Down') && this.controller[key]) {
-    
-                this.y = (this.y + this.height) < canvasHeight ? this.y + this.speed : canvasHeight - this.height;
-            }
-    
-    
-            if (key === ' ' && this.controller[key]) {
-                this.baseAttack()
-    
-            }
+        }
+
+        if (this.controller["ArrowUp"]) {
+
+            this.y = this.y > 0 ? this.y - this.speed : 0;
+        }
+
+        if (this.controller["ArrowDown"]) {
+
+            this.y = (this.y + this.height) < canvasHeight ? this.y + this.speed : canvasHeight - this.height;
+        }
+
+
+        if (this.controller[" "]) {
+            this.baseAttack()
+
+
         }
     }
 
-        baseAttack() {
+    baseAttack() {
 
-            if (this.cooldown <= 0) {
-        
-                let proj = new Projectile(this.x + (this.width / 2) - 2.5, this.y, 5, 10);
-                this.projectiles.push(proj);
-        
-                this.cooldown = 5;
-        
-        
-            }
-        
-        
+        if (this.cooldown <= 0) {
+
+            let proj = new Projectile(this.x + (this.width / 2) - 2.5, this.y, 5, 10);
+            this.projectiles.push(proj);
+
+            this.cooldown = 15;
+
         }
-    
+    }
 
-    
+    death(){
+
+        if (this.healtPoints <= 0) {
+           
+            
+        }
+    }
+
+  
 }
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
