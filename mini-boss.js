@@ -13,7 +13,7 @@ class MiniBoss extends BaseEnemy {
     }
 
     draw() {
-
+        ctx.fillStyle = 'lime';
         super.draw(ctx);
         this.attackCD--;
 

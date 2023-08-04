@@ -27,7 +27,15 @@ const hpBar = document.getElementById('hp-bar')
 let hpWidth = 100 / player.healtPoints
 
 
-let state = 'Play'
+let state = 'Play';
+
+
+let backround = new Image();
+
+backround.src = './assets/space.png';
+
+let backround_y = 0;
+
 
 let miniBossProjectiles = []
 
@@ -59,6 +67,8 @@ function animation() {
     if (state === 'Play') {
 
         if (player) {
+            loopBackground()
+
 
             player.draw(ctx);
             player.control(canvasWidth, canvasHeight);
@@ -85,7 +95,7 @@ function animation() {
             enemy.move(canvasHeight)
             if (enemy.projectiles) {
 
-                miniBossProjectiles.push(enemy.projectiles)
+                miniBossProjectiles.push(...enemy.projectiles)
 
 
 
@@ -96,8 +106,9 @@ function animation() {
         hpText.innerText = 'Vita:' + player.healtPoints;
         scoreText.innerText = 'Score:' + player.score;
 
-        hpBar.style.width = hpWidth * player.healtPoints + '%'
+        hpBar.style.width = hpWidth * player.healtPoints + '%';
 
+        
 
 
     } else if (state === 'GameOver') {
@@ -136,12 +147,13 @@ function miniBossSpawn() {
 
 function enemyCollision() {
     let playerAssets = [player, ...playerProjectiles];
-   
+   let enemyAssets = [...allEnemies,...miniBossProjectiles]
+
     for (let i = 0; i < playerAssets.length; i++) {
         const pA = playerAssets[i];
       
-        for (let j = 0; j < allEnemies.length; j++) {
-            const enemy = allEnemies[j];
+        for (let j = 0; j < enemyAssets.length; j++) {
+            const enemy = enemyAssets[j];
             
             if (
                 enemy.x < pA.x + pA.width &&
@@ -157,7 +169,7 @@ function enemyCollision() {
 
                 enemy.death();
 
-                if (!enemy.isAlive) {
+                if (!enemy.isAlive && enemy.score && !pA.isPlayer) {
 
                     player.score += enemy.score;
 
@@ -191,7 +203,24 @@ function gameStates() {
         default:
             break;
     }
+
+ 
 }
 
+function loopBackground() {
+
+    ctx.drawImage(backround,0,backround_y,canvasWidth,canvasHeight);
+    ctx.drawImage(backround,0,backround_y-canvasHeight,canvasWidth,canvasHeight);
+    backround_y++;
+
+    if (backround_y >= canvasHeight) {
+
+        backround_y=0;
+
+    
+        
+    }
+    
+}
 
 animation();

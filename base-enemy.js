@@ -12,6 +12,7 @@ class BaseEnemy extends GameObject {
 
 
     draw(ctx) {
+        ctx.fillStyle = 'crimson';
 
         super.draw(ctx)
       

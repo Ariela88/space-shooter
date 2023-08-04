@@ -8,12 +8,13 @@ class Player extends GameObject {
         this.cooldown = 5;
         this.healtPoints = 3;
         this.score = 0;
+        this.isPlayer = true;
 
 
     }
 
     draw(ctx) {
-
+        ctx.fillStyle = 'pink';
         super.draw(ctx);
         this.cooldown--;
         this.projectiles = this.projectiles.filter(p => p.isAlive);
